@@ -2,15 +2,23 @@ angular
 .module('myApp',['ngRoute'])
 .config(appConfig)
 .controller('MyController',MyController)
-.service('MyService',MyService);
+.service('MyService',MyService)
+.directive('miDirectiva',miDirectiva);
 
 function appConfig($routeProvider){
   $routeProvider
   .when('/',{     
-     templateUrl:'tpl/listado.html',
-     controller:'MyController',
-     controllerAs:'my'
+     template:'<mi-directiva><mi-directiva/>'
   });
+}
+
+function miDirectiva(){
+  return {
+    scope:{},
+    templateUrl:'tpl/listado.html',
+    controller:'MyController',
+    controllerAs:'my'  
+  }
 }
 
 function MyController($scope,MyService){
@@ -29,11 +37,9 @@ function MyService(){
      {titulo:'Producto 3',precio:4.2},
      {titulo:'Producto 4',precio:3},
      {titulo:'Producto 5',precio:2.5}
-   ];
-   
+   ];   
    console.log(datos);
    return datos;
-
- }
+  }
 
 }

@@ -1,7 +1,6 @@
 angular
 .module('myApp',['ngRoute'])
 .config(appConfig)
-.controller('MyController',MyController)
 .service('MyService',MyService)
 .directive('miDirectiva',miDirectiva);
 
@@ -12,17 +11,22 @@ function appConfig($routeProvider){
   });
 }
 
-function miDirectiva(){
-  return {
+function miDirectiva(){  
+  return{
     scope:{},
-    templateUrl:'tpl/listado.html',
-    controller:'MyController',
-    controllerAs:'my'  
+    controller: function(MyService){
+     this.productos = MyService.getData();   
+    },
+    controllerAs:'vm',
+    template:[
+    '<h1>Listado de Productos</h1>',
+     '<ul>',
+       '<li ng-repeat="producto in vm.productos">',
+         '<strong>{{ producto.titulo }}</strong>:{{ producto.precio | currency }}',
+       '</li>',      
+      '</ul>'       
+    ].join('')
   }
-}
-
-function MyController($scope,MyService){
-  this.productos = MyService.getData(); 	
 }
 
 function MyService(){

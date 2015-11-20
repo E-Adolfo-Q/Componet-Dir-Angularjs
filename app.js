@@ -2,6 +2,7 @@ angular
 .module('myApp',['ngRoute'])
 .config(appConfig)
 .service('MyService',MyService)
+.directive('miItem',miItem)
 .directive('miDirectiva',miDirectiva);
 
 function appConfig($routeProvider){
@@ -21,18 +22,32 @@ function miDirectiva(){
     template:[
     '<h1>Listado de Productos</h1>',
      '<ul>',
-       '<li ng-repeat="producto in vm.productos">',
-         '<strong>{{ producto.titulo }}</strong>:{{ producto.precio | currency }}',
-       '</li>',      
+        '<mi-item ng-repeat="producto in vm.productos" data="producto">',
+        '</mi-item>',   
       '</ul>'       
     ].join('')
   }
 }
 
+function miItem(){
+  return{
+    scope:{
+      data:'='
+    },
+    template:[
+     '<li>',
+       '<strong> {{ data.titulo}} </strong>',
+       '{{ data.precio | currency }}',
+      '</li>'
+    ].join('')
+  }
+}
+
 function MyService(){
-  return {
+  
+ return {
     getData : getData
-  } 
+ } 
  
  function getData(){
    var datos = [
@@ -42,8 +57,6 @@ function MyService(){
      {titulo:'Producto 4',precio:3},
      {titulo:'Producto 5',precio:2.5}
    ];   
-   console.log(datos);
    return datos;
   }
-
 }

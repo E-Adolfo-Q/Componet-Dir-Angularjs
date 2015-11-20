@@ -1,0 +1,6 @@
+<h1>Listado de Productos</h1>
+<ul>
+   <li ng-repeat="producto in my.productos">
+     <strong>{{ producto.titulo }}</strong> : {{ producto.precio | currency }}
+   </li>
+</ul>
